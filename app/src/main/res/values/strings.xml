@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WanAndroidKotlin</string>
+    <string name="index">首页</string>
+    <string name="all">全部分类</string>
+    <string name="personal">个人</string>
+
+
+    <string name="loading">正在加载...</string>
+</resources>
