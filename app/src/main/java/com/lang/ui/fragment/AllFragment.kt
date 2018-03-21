@@ -107,6 +107,7 @@ class AllFragment : Fragment(), BaseAdapter.OnItemClickListener {
                     tabTitleList.add(data.name)
                     myAdapter.notifyDataSetChanged()
                 }
+                switchPages(systemDataModel.data[0].children[0].id)
             }
         }
     }
@@ -134,8 +135,7 @@ class AllFragment : Fragment(), BaseAdapter.OnItemClickListener {
                     secondMenuList.add(child)
                 }
                 secondMenuListAdapter.addAllData(secondMenuList)
-                menuListRecyclerView.visibility =  View.VISIBLE
-//                switchPages()
+                menuListRecyclerView.visibility = View.VISIBLE
             }
             return clipPagerTitleView
         }
