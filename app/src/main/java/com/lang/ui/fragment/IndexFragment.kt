@@ -23,7 +23,7 @@ import org.jetbrains.anko.uiThread
 import java.net.URL
 import android.support.v7.widget.LinearLayoutManager
 import com.lang.ui.activity.WebViewActivity
-import com.lang.adapter.BaseAdapter
+import com.lang.adapter.base.BaseAdapter
 import com.youth.banner.Banner
 import org.jetbrains.anko.support.v4.startActivity
 
@@ -82,7 +82,7 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
         myAdapter.setOnItemClickListener(this)
         indexRecyclerView.setLinerLayout()
         indexRecyclerView.setOnLoadMoreListener(this)
-        indexRecyclerView.setAdapter(myAdapter)
+        indexRecyclerView.setIndexListAdapter(myAdapter)
     }
 
 

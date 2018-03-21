@@ -3,13 +3,12 @@ package com.lang.adapter
 import android.content.Context
 import com.lang.R
 import com.lang.adapter.base.BaseAdapter
-import com.lang.model.DatasBean
+import com.lang.model.AllArticleListModel
 
 /**
- * Created by lang on 2018/3/15.
+ * Created by lang on 2018/3/21.
  */
-class IndexListAdapter constructor(context: Context, layoutId: Int) : BaseAdapter<DatasBean>(context, layoutId) {
-
+class AllArticleListAdapter constructor(context: Context, layoutId: Int) : BaseAdapter<AllArticleListModel.DataBean.DatasBean>(context, layoutId) {
 
     override fun onBindData(holder: BaseViewHolder, position: Int) {
         holder.setText(R.id.item_tv_index_title, list[position].title)

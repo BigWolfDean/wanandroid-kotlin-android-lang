@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.lang.R
+import com.lang.adapter.AllArticleListAdapter
 import com.lang.adapter.IndexListAdapter
 
 
@@ -58,7 +59,11 @@ class LoadMoreRecyclerView : LinearLayout, SwipeRefreshLayout.OnRefreshListener 
         recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
-    fun setAdapter(adapter: IndexListAdapter) {
+    fun setIndexListAdapter(adapter: IndexListAdapter) {
+        recyclerView.adapter = adapter
+    }
+
+    fun setAllArticleListAdapter(adapter: AllArticleListAdapter) {
         recyclerView.adapter = adapter
     }
 

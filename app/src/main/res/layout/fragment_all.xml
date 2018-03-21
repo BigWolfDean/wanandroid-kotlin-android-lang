@@ -8,21 +8,38 @@
 
     <include layout="@layout/include_toolbar" />
 
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/all_tab_layout"
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/all_tab_indicator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="40dp">
 
 
-    </android.support.design.widget.TabLayout>
+    </net.lucode.hackware.magicindicator.MagicIndicator>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/all_view_pager"
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v4.view.ViewPager>
+
+        <FrameLayout
+            android:id="@+id/all_fm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:background="@color/colorAccent_2"
+            android:id="@+id/all_second_menu_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </android.support.v7.widget.RecyclerView>
+
+    </FrameLayout>
 
 
 </LinearLayout>
