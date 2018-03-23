@@ -1,6 +1,4 @@
-package com.lang.model;
-
-import java.util.List;
+package com.lang.model.index;
 
 /**
  * Created by lang on 2018/3/14.

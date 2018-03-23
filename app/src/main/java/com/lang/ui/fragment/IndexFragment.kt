@@ -2,31 +2,29 @@ package com.lang.ui.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.LinearLayoutManager
+import android.view.*
 import com.google.gson.Gson
 import com.lang.R
-import com.lang.ui.activity.MainActivity
 import com.lang.adapter.IndexListAdapter
+import com.lang.adapter.base.BaseAdapter
 import com.lang.banner.GlideImageLoader
 import com.lang.model.BannerModel
-import com.lang.model.DatasBean
-import com.lang.model.IndexListModel
+import com.lang.model.index.DatasBean
+import com.lang.model.index.IndexListModel
+import com.lang.ui.activity.MainActivity
+import com.lang.ui.activity.SearchActivity
+import com.lang.ui.activity.WebViewActivity
+import com.lang.ui.view.LoadMoreRecyclerView
 import com.lang.util.initToolbar
 import com.lang.util.setToolbarTitle
-import com.lang.ui.view.LoadMoreRecyclerView
+import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_index.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.uiThread
 import java.net.URL
-import android.support.v7.widget.LinearLayoutManager
-import com.lang.ui.activity.WebViewActivity
-import com.lang.adapter.base.BaseAdapter
-import com.youth.banner.Banner
-import org.jetbrains.anko.support.v4.startActivity
-
 
 class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainActivity.OnFirstTabClickListener, BaseAdapter.OnItemClickListener {
 
@@ -55,14 +53,13 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         showToolbar()
         initView()
         showBanner()
         setAdapter()
         setTabClickListener()
         setBannerClickListener()
-        loadList(0)
+        setHasOptionsMenu(true)
     }
 
     private fun setBannerClickListener() {
@@ -87,8 +84,9 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
 
 
     private fun showToolbar() {
-        initToolbar(toolbar)
-        setToolbarTitle(toolbar_title, resources.getString(R.string.app_name))
+        initToolbar(index_toolbar)
+        setToolbarTitle(index_toolbar_title, resources.getString(R.string.app_name))
+
     }
 
 
@@ -114,6 +112,7 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
                 indexBanner.setDelayTime(10 * 1000)
                 indexBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
                 indexBanner.start()
+                loadList(0)
             }
         }
     }
@@ -151,9 +150,8 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
     }
 
     override fun onItemClick(itemView: View, position: Int) {
-        startActivity<WebViewActivity>("url" to datasList.get(position).link, "title" to datasList.get(position).title)
+        startActivity<WebViewActivity>("url" to datasList[position].link, "title" to datasList[position].title)
     }
-
 
     override fun onFirstTabClick() {
         indexRecyclerView.getRecyclerView().smoothScrollToPosition(0)
@@ -161,4 +159,15 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
         mLayoutManager.scrollToPositionWithOffset(0, 0)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.menu_index, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.action_search -> startActivity<SearchActivity>()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

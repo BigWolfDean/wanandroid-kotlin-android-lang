@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.lang.R
 import com.lang.adapter.AllArticleListAdapter
 import com.lang.adapter.IndexListAdapter
+import com.lang.adapter.SearchListAdapter
 
 
 /**
@@ -60,6 +61,10 @@ class LoadMoreRecyclerView : LinearLayout, SwipeRefreshLayout.OnRefreshListener 
     }
 
     fun setIndexListAdapter(adapter: IndexListAdapter) {
+        recyclerView.adapter = adapter
+    }
+
+    fun setSearchListAdapter(adapter: SearchListAdapter) {
         recyclerView.adapter = adapter
     }
 

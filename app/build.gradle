@@ -42,8 +42,6 @@ dependencies {
     compile "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
     compile "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
 
-    // Anko SQLite
-    compile "org.jetbrains.anko:anko-sqlite:$anko_version"
 
     compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
 
@@ -57,8 +55,12 @@ dependencies {
     //gson https://github.com/google/gson
     compile 'com.google.code.gson:gson:2.8.2'
 
-
+    //MagicIndicator https://github.com/hackware1993/MagicIndicator
     compile 'com.github.hackware1993:MagicIndicator:1.5.0'
+
+    //Kolley https://github.com/ohmerhe/Kolley
+    compile 'com.ohmerhe.kolley:kolley:0.3.1'
+
 
 
     testImplementation 'junit:junit:4.12'

@@ -1,4 +1,4 @@
-package com.lang.model;
+package com.lang.model.index;
 
 import java.util.List;
 

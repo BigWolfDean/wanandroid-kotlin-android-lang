@@ -1,4 +1,4 @@
-package com.lang.model;
+package com.lang.model.index;
 
 /**
  * Created by lang on 2018/3/15.

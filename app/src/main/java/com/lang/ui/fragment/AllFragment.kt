@@ -6,14 +6,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.google.gson.Gson
 import com.lang.R
 import com.lang.adapter.base.BaseAdapter
 import com.lang.adapter.SecondMenuListAdapter
 import com.lang.model.SystemDataModel
+import com.lang.ui.activity.SearchActivity
 import com.lang.util.initToolbar
 import com.lang.util.setToolbarTitle
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -27,6 +26,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.uiThread
 import java.net.URL
@@ -64,7 +64,6 @@ class AllFragment : Fragment(), BaseAdapter.OnItemClickListener {
         initIndicator()
         initMenuList()
         getSystemData()
-
     }
 
     private fun initMenuList() {
@@ -175,5 +174,6 @@ class AllFragment : Fragment(), BaseAdapter.OnItemClickListener {
         fragmentTransaction.replace(R.id.all_fm, fragment)
         fragmentTransaction.commitAllowingStateLoss()
     }
+
 
 }
