@@ -1,19 +1,18 @@
 package com.lang.ui.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
+import android.text.Html
 import android.view.View
 import com.google.gson.Gson
 import com.lang.R
-import com.lang.adapter.IndexListAdapter
 import com.lang.adapter.SearchListAdapter
 import com.lang.adapter.base.BaseAdapter
 import com.lang.model.SearchListModel
 import com.lang.ui.view.LoadMoreRecyclerView
 import com.ohmerhe.kolley.request.Http
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.startActivity
 import java.nio.charset.Charset
 
 class SearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener, BaseAdapter.OnItemClickListener, LoadMoreRecyclerView.LoadMoreListener {
@@ -66,9 +65,10 @@ class SearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener, Base
 
 
     override fun onQueryTextSubmit(query: String?): Boolean {
+        searchLoadMoreRecyclerView.setRefreshing()
         searchText = query!!
-        getSearchData(query)
-        return true
+        onRefresh()
+        return false
     }
 
     private fun getSearchData(query: String?) {
@@ -104,10 +104,11 @@ class SearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener, Base
 
 
     override fun onItemClick(itemView: View, position: Int) {
-        startActivity<WebViewActivity>("url" to searchListAdapter.getAllData()[position].link, "title" to searchListAdapter.getAllData()[position].title)
+        startActivity<WebViewActivity>("url" to searchListAdapter.getAllData()[position].link, "title" to Html.fromHtml(searchListAdapter.getAllData()[position].title).toString())
     }
 
     override fun onRefresh() {
+        page = 0
         searchListAdapter.clearAllData()
         getSearchData(searchText)
     }

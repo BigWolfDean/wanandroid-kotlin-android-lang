@@ -10,13 +10,21 @@
     <include layout="@layout/include_toolbar" />
 
 
-    <WebView
-        android:id="@+id/web_view"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/web_view_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <WebView
+            android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </WebView>
+
+        </WebView>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
 </LinearLayout>

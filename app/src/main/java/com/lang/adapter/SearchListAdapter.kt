@@ -1,6 +1,7 @@
 package com.lang.adapter
 
 import android.content.Context
+import android.text.Html
 import com.lang.R
 import com.lang.adapter.base.BaseAdapter
 import com.lang.model.SearchListModel
@@ -13,7 +14,7 @@ class SearchListAdapter constructor(context: Context, layoutId: Int) : BaseAdapt
 
 
     override fun onBindData(holder: BaseViewHolder, position: Int) {
-        holder.setText(R.id.item_tv_index_title, list[position].title)
+        holder.setText(R.id.item_tv_index_title, Html.fromHtml(list[position].title).toString())
         holder.setText(R.id.item_tv_index_date, list[position].niceDate)
     }
 

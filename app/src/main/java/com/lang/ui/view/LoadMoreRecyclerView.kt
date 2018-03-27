@@ -89,6 +89,10 @@ class LoadMoreRecyclerView : LinearLayout, SwipeRefreshLayout.OnRefreshListener 
         isLoading = false
     }
 
+    fun setRefreshing() {
+        swipeLayout.isRefreshing = true
+    }
+
 
     fun noMoreData() {
         loadMoreLayout.visibility = View.GONE
