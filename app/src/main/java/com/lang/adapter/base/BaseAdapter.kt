@@ -40,7 +40,6 @@ abstract class BaseAdapter<T> constructor(val context: Context, private val layo
 
     fun getAllData(): List<T> {
         return this.list
-
     }
 
     fun clearAllData() {
