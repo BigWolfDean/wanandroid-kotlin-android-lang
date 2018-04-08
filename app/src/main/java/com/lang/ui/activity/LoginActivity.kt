@@ -10,9 +10,7 @@ import android.widget.EditText
 import com.google.gson.Gson
 import com.lang.R
 import com.lang.model.RegisterLoginModel
-import com.lang.util.Preference
-import com.lang.util.initToolbar
-import com.lang.util.setToolbarTitle
+import com.lang.util.*
 import com.ohmerhe.kolley.request.Http
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -32,12 +30,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var registerButton: Button
 
     private lateinit var loginButton: Button
-
-    private var userName by Preference("user_name", "null")
-
-    private var userPwd by Preference("user_password", "null")
-
-    private var isLogin by Preference("is_login", false)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,8 +85,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         val loginModel = gson.fromJson<RegisterLoginModel>(result, RegisterLoginModel::class.java)
                         when (loginModel.errorCode) {
                             0 -> {
-                                userName = loginModel.data.username
-                                userPwd = loginModel.data.password
+                                setUserName(loginModel.data.username)
+                                setUserPwd(loginModel.data.password)
+                                setIsLogin(true)
                                 finish()
                             }
 
