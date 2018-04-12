@@ -10,6 +10,7 @@ import com.lang.adapter.IndexListAdapter
 import com.lang.adapter.base.BaseAdapter
 import com.lang.banner.GlideImageLoader
 import com.lang.model.BannerModel
+import com.lang.model.CollectResultModel
 import com.lang.model.index.DatasBean
 import com.lang.model.index.IndexListModel
 import com.lang.ui.activity.MainActivity
@@ -18,15 +19,17 @@ import com.lang.ui.activity.WebViewActivity
 import com.lang.ui.view.LoadMoreRecyclerView
 import com.lang.util.initToolbar
 import com.lang.util.setToolbarTitle
+import com.ohmerhe.kolley.request.Http
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_index.*
-import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.indeterminateProgressDialog
 import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.uiThread
-import java.net.URL
+import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
+import java.nio.charset.Charset
 
-class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainActivity.OnFirstTabClickListener, BaseAdapter.OnItemClickListener {
+class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainActivity.OnFirstTabClickListener, BaseAdapter.OnItemClickListener, IndexListAdapter.OnImageClickListener {
 
     private lateinit var bannerImgList: MutableList<String>
 
@@ -75,8 +78,9 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
 
     private fun setAdapter() {
         datasList = ArrayList()
-        myAdapter = IndexListAdapter(activity!!.applicationContext, R.layout.item_index_list)
+        myAdapter = IndexListAdapter(this.activity!!, R.layout.item_index_favorite_list)
         myAdapter.setOnItemClickListener(this)
+        myAdapter.setOnCollectClickListener(this)
         indexRecyclerView.setLinerLayout()
         indexRecyclerView.setOnLoadMoreListener(this)
         indexRecyclerView.setIndexListAdapter(myAdapter)
@@ -95,9 +99,11 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
     }
 
     private fun showBanner() {
-        doAsync {
-            val result = URL("http://www.wanandroid.com/banner/json").readText()
-            uiThread {
+        Http.get {
+            url = "http://www.wanandroid.com/banner/json"
+
+            onSuccess {
+                val result = it.toString(Charset.defaultCharset())
                 val gson = Gson()
                 bannerModel = gson.fromJson<BannerModel>(result, BannerModel::class.java)
                 bannerImgList = ArrayList()
@@ -114,14 +120,23 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
                 indexBanner.start()
                 loadList(0)
             }
+
+
+            onFail {
+                toast(it.localizedMessage)
+            }
         }
     }
 
 
     private fun loadList(page: Int) {
-        doAsync {
-            val result = URL("http://www.wanandroid.com/article/list/$page/json").readText()
-            uiThread {
+
+        Http.get {
+
+            url = "http://www.wanandroid.com/article/list/$page/json"
+
+            onSuccess {
+                val result = it.toString(Charset.defaultCharset())
                 val gson = Gson()
                 indexListModel = gson.fromJson<IndexListModel>(result, IndexListModel::class.java)
                 datasList.addAll(indexListModel.data.datas)
@@ -132,6 +147,11 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
                 indexRecyclerView.refreshComplete()
                 indexRecyclerView.loadMoreComplete()
             }
+
+            onFail {
+                toast(it.localizedMessage)
+            }
+
         }
     }
 
@@ -151,6 +171,34 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
 
     override fun onItemClick(itemView: View, position: Int) {
         startActivity<WebViewActivity>("url" to datasList[position].link, "title" to datasList[position].title)
+    }
+
+    override fun onImageClick(imgView: View, position: Int) {
+        indeterminateProgressDialog(if (myAdapter.getAllData()[position].isCollect) "正在取消收藏..." else "正在收藏...") {
+            Http.post {
+                url = getCollectUrl(myAdapter.getAllData()[position].isCollect, myAdapter.getAllData()[position].id)
+
+                onSuccess {
+                    val result = it.toString(Charset.defaultCharset())
+                    val gson = Gson()
+                    val collectResultModel = gson.fromJson<CollectResultModel>(result, CollectResultModel::class.java)
+                    if (collectResultModel.errorCode != 0) context.toast(collectResultModel.errorMsg)
+                    dismiss()
+                    val datasBean: DatasBean = myAdapter.getAllData()[position]
+                    datasBean.isCollect = !datasBean.isCollect
+                    myAdapter.replaceSingleData(datasBean, position)
+                    myAdapter.notifyItemChanged(position)
+                }
+
+                onFail {
+                    dismiss()
+                }
+            }
+        }.show()
+    }
+
+    private fun getCollectUrl(isCollect: Boolean, id: Int): String {
+        return if (isCollect) "http://www.wanandroid.com/lg/uncollect_originId/$id/json" else "http://www.wanandroid.com/lg/collect/$id/json"
     }
 
     override fun onFirstTabClick() {

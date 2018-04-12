@@ -70,7 +70,7 @@ class AllChildFragment : Fragment(), BaseAdapter.OnItemClickListener, LoadMoreRe
 
         allArticleRecycler.setLinerLayout()
 
-        allArticleListAdapter = AllArticleListAdapter(activity!!.applicationContext, R.layout.item_index_list)
+        allArticleListAdapter = AllArticleListAdapter(this.activity!!, R.layout.item_index_list)
 
         allArticleRecycler.setAllArticleListAdapter(allArticleListAdapter)
 

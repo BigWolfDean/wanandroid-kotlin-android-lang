@@ -1,10 +1,12 @@
 package com.lang.adapter.base
 
+import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.lang.R
 import com.lang.adapter.BaseViewHolder
 
 
@@ -36,6 +38,10 @@ abstract class BaseAdapter<T> constructor(val context: Context, private val layo
     fun addAllData(dataList: List<T>) {
         this.list.addAll(dataList)
         notifyDataSetChanged()
+    }
+
+    fun replaceSingleData(t: T, position: Int) {
+        this.list[position] = t
     }
 
     fun getAllData(): List<T> {

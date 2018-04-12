@@ -1,8 +1,11 @@
 package com.lang.adapter
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.VectorEnabledTintResources
 import android.view.View
 import android.util.SparseArray
+import android.widget.ImageView
 import android.widget.TextView
 
 
@@ -30,7 +33,18 @@ class BaseViewHolder constructor(private val myItemView: View?) : RecyclerView.V
         val view = getView<TextView>(resId)
         view.text = text
     }
-    
+
+    fun setImageView(resId: Int, resources: Int) {
+        val view = getView<ImageView>(resId)
+        view.setBackgroundResource(resources)
+    }
+
+    //获取指定的view
+    fun getSingleView(resId: Int): View {
+        return getView(resId)
+    }
+
+    //设置字体颜色
     fun setTextColorResource(resId: Int, color: Int) {
         val view = getView<TextView>(resId)
         view.setTextColor(color)

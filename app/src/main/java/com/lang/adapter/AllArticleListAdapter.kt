@@ -1,5 +1,6 @@
 package com.lang.adapter
 
+import android.app.Activity
 import android.content.Context
 import com.lang.R
 import com.lang.adapter.base.BaseAdapter

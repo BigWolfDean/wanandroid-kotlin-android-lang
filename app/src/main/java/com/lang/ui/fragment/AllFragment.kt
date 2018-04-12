@@ -71,7 +71,7 @@ class AllFragment : Fragment(), BaseAdapter.OnItemClickListener {
         linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
 
-        secondMenuListAdapter = SecondMenuListAdapter(activity!!.applicationContext, R.layout.item_second_menu_list)
+        secondMenuListAdapter = SecondMenuListAdapter(this.activity!!, R.layout.item_second_menu_list)
         secondMenuListAdapter.setOnItemClickListener(this)
         menuListRecyclerView.layoutManager = linearLayoutManager
 

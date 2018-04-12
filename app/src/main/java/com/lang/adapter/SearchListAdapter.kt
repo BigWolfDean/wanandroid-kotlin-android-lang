@@ -1,5 +1,6 @@
 package com.lang.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.text.Html
 import com.lang.R

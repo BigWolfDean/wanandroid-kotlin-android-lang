@@ -28,7 +28,7 @@
         <activity android:name=".ui.activity.WebViewActivity" />
         <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.personal.FavoriteActivity"></activity>
+        <activity android:name=".ui.activity.personal.FavoriteActivity" />
     </application>
 
 </manifest>

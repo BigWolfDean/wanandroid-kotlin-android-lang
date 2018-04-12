@@ -9,6 +9,7 @@
     android:paddingTop="15dp">
 
     <TextView
+        android:text="我是标题"
         android:id="@+id/item_tv_index_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,6 +19,7 @@
         android:textSize="15sp" />
 
     <TextView
+        android:text="2018.04.10"
         android:id="@+id/item_tv_index_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
