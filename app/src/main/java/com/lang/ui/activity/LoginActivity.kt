@@ -101,7 +101,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     }
 
                     onFail {
-                        toast(it.message.toString())
+
                     }
                 }
             }
@@ -134,7 +134,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     }
 
                     onFail {
-                        toast(it.message.toString())
+
                     }
                 }
             }

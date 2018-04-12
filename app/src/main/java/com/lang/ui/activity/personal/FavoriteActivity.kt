@@ -15,10 +15,10 @@ import com.lang.util.initToolbar
 import com.lang.util.setToolbarTitle
 import com.ohmerhe.kolley.request.Http
 import kotlinx.android.synthetic.main.include_toolbar.*
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.*
 import java.nio.charset.Charset
 
-class FavoriteActivity : AppCompatActivity(), BaseAdapter.OnItemClickListener, LoadMoreRecyclerView.LoadMoreListener {
+class FavoriteActivity : AppCompatActivity(), BaseAdapter.OnItemClickListener, BaseAdapter.OnItemLongClickListener, LoadMoreRecyclerView.LoadMoreListener {
 
     private lateinit var loadMoreRecyclerView: LoadMoreRecyclerView
 
@@ -56,6 +56,7 @@ class FavoriteActivity : AppCompatActivity(), BaseAdapter.OnItemClickListener, L
     private fun initAdapter() {
         favoriteListAdapter = FavoriteListAdapter(this, R.layout.item_index_list)
         favoriteListAdapter.setOnItemClickListener(this)
+        favoriteListAdapter.setOnItemLongClickListener(this)
         loadMoreRecyclerView.setLinerLayout()
         loadMoreRecyclerView.setFavoriteListAdapter(favoriteListAdapter)
     }
@@ -85,6 +86,29 @@ class FavoriteActivity : AppCompatActivity(), BaseAdapter.OnItemClickListener, L
 
     override fun onItemClick(itemView: View, position: Int) {
         startActivity<WebViewActivity>("url" to favoriteListAdapter.getAllData()[position].link, "title" to Html.fromHtml(favoriteListAdapter.getAllData()[position].title).toString())
+    }
+
+    override fun onItemLongClick(itemView: View, position: Int) {
+        alert("确定要取消收藏该内容吗？") {
+            yesButton {
+                Http.post {
+                    url = "http://www.wanandroid.com/lg/uncollect_originId/${favoriteListAdapter.getAllData()[position].originId}/json"
+
+                    onSuccess {
+                        favoriteListAdapter.removeSingleData(position)
+                        favoriteListAdapter.notifyDataSetChanged()
+                        toast("取消成功")
+                    }
+                    onFail {
+                        toast("取消失败")
+                    }
+                }
+            }
+
+            noButton {
+
+            }
+        }.show()
     }
 
     override fun onRefresh() {

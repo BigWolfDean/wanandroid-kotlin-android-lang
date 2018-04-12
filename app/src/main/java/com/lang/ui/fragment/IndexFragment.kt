@@ -123,7 +123,7 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
 
 
             onFail {
-                toast(it.localizedMessage)
+
             }
         }
     }
@@ -149,7 +149,7 @@ class IndexFragment : Fragment(), LoadMoreRecyclerView.LoadMoreListener, MainAct
             }
 
             onFail {
-                toast(it.localizedMessage)
+                
             }
 
         }
